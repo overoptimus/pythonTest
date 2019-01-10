@@ -1,0 +1,7 @@
+egg
+apple
+people
+pink
+eight
+number
+list
