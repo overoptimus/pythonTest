@@ -1,7 +1,7 @@
 import optparse
 from socket import *
 
-def connScan(tgtHost, tgtPort):
+def connScan(tgtHost,tgtPort):
     try:
         connSkt = socket(AF_INET, SOCK_STREAM)
         connSkt.connect((tgtHost,tgtPort))
@@ -14,7 +14,7 @@ def connScan(tgtHost, tgtPort):
         print('[-] %d/tcp closed' %tgtPort)
 
 
-def portScan(tgtHost, tgtPorts):
+def portScan(tgtHost,tgtPorts):
     try:
         tgtIp = gethostbyname(tgtHost)
     except:
@@ -28,17 +28,22 @@ def portScan(tgtHost, tgtPorts):
     setdefaulttimeout(1)
     for tgtPort in tgtPorts:
         print('Scanning port ' + tgtPort)
-        connScan(tgtHost, int(tgtPort))
+        connScan(tgtHost,int(tgtPort))
 
 
 def main():
-    parse = optparse.OptionParser('usage %prog -H' + ' <target host> -p <target port>')
-    parse.add_option('-H', dest='tgtHost', type='string', help='specify target host')
-    parse.add_option('-p', dest='tgtPort', type='int', help='specify target port')
-    (options, args) = parse.parse_args()
+    parser = optparse.OptionParser('usage %prog -H' + ' <target host> -p <target port>')
+    parser.add_option('-H', dest='tgtHost', type='string', help='specify target host')
+    parser.add_option('-p', dest='tgtPort', type='string', help='specify target port[s] separated by comma')
+    (options,args) = parser.parse_args()
     tgtHost = options.tgtHost
-    tgtPost = options.tgtPort
+    tgtPorts = str(options.tgtPort).split(',')
+    print(tgtPorts)
+    if (tgtHost == None) | (tgtPorts[0] == None):
+        print('[-] You must specify a target host and port[s]')
+        exit(0)
+    portScan(tgtHost,tgtPorts)
 
-if (tgtHost == None) | (tgtPort == None):
-    print(parse.usage)
-    exit(0)
+
+if __name__ == '__main__':
+    main()
