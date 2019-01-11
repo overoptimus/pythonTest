@@ -1,6 +1,8 @@
 import optparse
 from socket import *
+from threading import Thread,Semaphore
 
+screenLock = Semaphore(value=1)
 def connScan(tgtHost,tgtPort):
     try:
         connSkt = socket(AF_INET, SOCK_STREAM)
@@ -11,6 +13,7 @@ def connScan(tgtHost,tgtPort):
         print('[+] ' + str(results))
         connSkt.close()
     except:
+        screenLock
         print('[-] %d/tcp closed' %tgtPort)
 
 
@@ -28,7 +31,8 @@ def portScan(tgtHost,tgtPorts):
     setdefaulttimeout(1)
     for tgtPort in tgtPorts:
         print('Scanning port ' + tgtPort)
-        connScan(tgtHost,int(tgtPort))
+        t = Thread(target=connScan, args=(tgtHost, int(tgtPort)))
+        t.start()
 
 
 def main():
