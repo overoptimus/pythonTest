@@ -11,10 +11,12 @@ def connScan(tgtHost,tgtPort):
         results = connSkt.recv(100)
         print('[+] %d/tcp open' %tgtPort)
         print('[+] ' + str(results))
-        connSkt.close()
     except:
-        screenLock
+        screenLock.acquire()
         print('[-] %d/tcp closed' %tgtPort)
+    finally:
+        screenLock.release()
+        connSkt.close()
 
 
 def portScan(tgtHost,tgtPorts):
