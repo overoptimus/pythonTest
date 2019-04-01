@@ -1,2 +1,7 @@
-a = list(filter(lambda x:True if x % 3 == 0 else False,range(100)))
-print(a)
+import requests
+
+req = requests.get("http://files.grouplens.org/datasets/movielens/ml-100k.zip")
+print(req.text)
+
+
+print(isinstance(12, int))
