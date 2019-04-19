@@ -24,8 +24,8 @@ class Fahrenheit:
         instance.cel = (float(value) - 32) / 1.8
 
 class Temperature:
-    # cel = None
-    # fah = None
-    def __init__(self):
-        self.cel = Celsius()
-        self.fah = Fahrenheit()
+    cel = Celsius()
+    fah = Fahrenheit()
+    # def __init__(self):
+    #     self.cel = Celsius()
+    #     self.fah = Fahrenheit()
