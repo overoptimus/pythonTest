@@ -29,11 +29,12 @@ while True:
         'action': 'FY_BY_REALTlME'
     }
     data = p.urlencode(data).encode('UTF-8')
-    print(type(data))
+    # print(type(data))
     req = r.Request(url, data=data, headers=headers)
 
     response = r.urlopen(req)
     html = response.read().decode('UTF-8')
     html = json.loads(html)
+    # print(type(html))
     print(html['translateResult'][0][0]['tgt'])
     time.sleep(2)
